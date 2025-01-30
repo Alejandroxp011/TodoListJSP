@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" errorPage="error.jsp" %>
-<%@ page import="org.example.todolist.TodoItem" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" errorPage="views/pages/error.jsp" %>
+<%@ page import="org.example.todolist.model.TodoItem" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
@@ -13,13 +13,9 @@
 </div>
 
 <h2>List of Todos</h2>
-<form action="${pageContext.request.contextPath}/TodoList" method="post">
-    <label>
-        <input type="text" name="description" placeholder="Nueva tarea" required>
-    </label>
-    <input type="hidden" name="action" value="add">
-    <button type="submit">new</button>
-</form>
+<a href="${pageContext.request.contextPath}/views/pages/newTask.jsp">
+    <button type="button">Add New Task</button>
+</a>
 <table>
     <thead>
     <tr>

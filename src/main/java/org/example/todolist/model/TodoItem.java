@@ -1,4 +1,4 @@
-package org.example.todolist;
+package org.example.todolist.model;
 
 import lombok.Data;
 
@@ -12,11 +12,11 @@ public class TodoItem {
     private boolean completed;
     private LocalDate targetDate;
 
-    public TodoItem( int id,String title, String description, LocalDate targetDate) {
+    public TodoItem( int id,String title, String description, boolean completed, LocalDate targetDate) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.completed = false;
+        this.completed = completed;
         this.targetDate = targetDate;
     }
 }
