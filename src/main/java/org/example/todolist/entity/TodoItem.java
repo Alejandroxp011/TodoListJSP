@@ -1,10 +1,13 @@
-package org.example.todolist.model;
+package org.example.todolist.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
 public class TodoItem {
     private int id;
     private String title;
@@ -19,4 +22,5 @@ public class TodoItem {
         this.completed = completed;
         this.targetDate = targetDate;
     }
+
 }

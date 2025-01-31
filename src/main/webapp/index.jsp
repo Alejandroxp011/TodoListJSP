@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" errorPage="views/pages/error.jsp" %>
-<%@ page import="org.example.todolist.model.TodoItem" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" errorPage="error.jsp" %>
+<%@ page import="org.example.todolist.entity.TodoItem" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
@@ -13,7 +13,7 @@
 </div>
 
 <h2>List of Todos</h2>
-<a href="${pageContext.request.contextPath}/views/pages/newTask.jsp">
+<a href="${pageContext.request.contextPath}/new.jsp">
     <button type="button">Add New Task</button>
 </a>
 <table>
@@ -55,6 +55,10 @@
                 <input type="hidden" name="action" value="delete">
                 <button type="submit">Delete</button>
             </form>
+            <a href="${pageContext.request.contextPath}/edit.jsp?action=getTaskDetails&id=<%= item.getId() %>">
+                <button type="button">Edit</button>
+            </a>
+
         </td>
     </tr>
     <%

@@ -1,6 +1,6 @@
-package org.example.todolist.service;
+package org.example.todolist.application;
 
-import org.example.todolist.model.TodoItem;
+import org.example.todolist.entity.TodoItem;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,6 +18,10 @@ public class TodoService {
         todoList.add(new TodoItem(nextId++, title, description, completed, targetDate));
     }
 
+    public void updateTask(int id, String title, String description, boolean completed, LocalDate targetDate) {
+
+    }
+
     public void changeCompleteTask(int id) {
         todoList.stream()
                 .filter(item -> item.getId() == id)
@@ -26,5 +30,9 @@ public class TodoService {
 
     public void deleteTask(int id) {
         todoList.removeIf(item -> item.getId() == id);
+    }
+
+    public TodoItem getTaskDetails(int id) {
+        return todoList.stream().filter(item -> item.getId() == id).toList().getFirst();
     }
 }
