@@ -1,0 +1,11 @@
+.header{
+    background-color: #4CAF50;
+    margin-top: 0;
+    color: white;
+    padding: 10px;
+}
+
+.header .title-header{
+    color: inherit;
+    text-decoration: none;
+}
