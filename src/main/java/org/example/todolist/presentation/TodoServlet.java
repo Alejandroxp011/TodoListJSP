@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.todolist.entity.TodoItem;
+import org.example.todolist.domain.entity.TodoItem;
 import org.example.todolist.application.TodoService;
 
 import java.io.IOException;
@@ -45,22 +45,27 @@ public class TodoServlet extends HttpServlet {
     }
 
     private void addTask(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String description = req.getParameter("description");
-        String title = req.getParameter("title");
-        String targetDate = req.getParameter("targetDate");
-        String status = req.getParameter("status");
-        todoService.addTask(title, description, status.equals("true"), LocalDate.parse(targetDate));
+        TodoItem todoItem = new TodoItem(
+                0,
+                req.getParameter("title"),
+                req.getParameter("description"),
+                false,
+                LocalDate.parse(req.getParameter("targetDate"))
+        );
+        todoService.addTask(todoItem);
         resp.sendRedirect(req.getContextPath() + "/TodoList");
     }
 
     private void updateTask(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        int id = Integer.parseInt(req.getParameter("id"));
-        String description = req.getParameter("description");
-        String title = req.getParameter("title");
-        String targetDate = req.getParameter("targetDate");
-        String status = req.getParameter("status");
-        todoService.updateTask(id, title, description, status.equals("true"), LocalDate.parse(targetDate));
-        resp.sendRedirect( "/TodoList");
+        TodoItem todoItem = new TodoItem(
+                Integer.parseInt(req.getParameter("id")),
+                req.getParameter("title"),
+                req.getParameter("description"),
+                Boolean.parseBoolean(req.getParameter("status")),
+                LocalDate.parse(req.getParameter("targetDate"))
+        );
+        todoService.updateTask(todoItem);
+        resp.sendRedirect( req.getContextPath() + "/TodoList");
     }
 
     private void completeTask(HttpServletRequest req, HttpServletResponse resp) throws IOException {

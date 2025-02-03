@@ -1,38 +1,41 @@
 package org.example.todolist.application;
 
-import org.example.todolist.entity.TodoItem;
+import org.example.todolist.domain.entity.TodoItem;
+import org.example.todolist.infrastructure.TodoRepository;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TodoService {
-    private final List<TodoItem> todoList = new ArrayList<>();
-    private int nextId = 1;
+    private final TodoRepository todoRepository;
+
+    public TodoService() {
+        this.todoRepository = new TodoRepository();
+    }
 
     public List<TodoItem> getAllTasks() {
-        return todoList;
+        return todoRepository.findAll();
     }
 
-    public void addTask(String title, String description, boolean completed, LocalDate targetDate) {
-        todoList.add(new TodoItem(nextId++, title, description, completed, targetDate));
+    public void addTask(TodoItem todoItem) {
+        todoRepository.save(todoItem);
     }
 
-    public void updateTask(int id, String title, String description, boolean completed, LocalDate targetDate) {
-
+    public void updateTask(TodoItem todoItem) {
+        todoRepository.updateById(todoItem);
     }
 
     public void changeCompleteTask(int id) {
-        todoList.stream()
-                .filter(item -> item.getId() == id)
-                .forEach(item -> item.setCompleted(!item.isCompleted()));
+        todoRepository.updateById(todoRepository.findById(id).map(todoItem -> {
+            todoItem.setCompleted(!todoItem.isCompleted());
+            return todoItem;
+        }).orElseThrow(() -> new RuntimeException("Task not found")));
     }
 
     public void deleteTask(int id) {
-        todoList.removeIf(item -> item.getId() == id);
+        todoRepository.deleteById(id);
     }
 
     public TodoItem getTaskDetails(int id) {
-        return todoList.stream().filter(item -> item.getId() == id).toList().getFirst();
+        return todoRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
     }
 }

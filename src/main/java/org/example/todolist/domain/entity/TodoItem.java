@@ -1,6 +1,5 @@
-package org.example.todolist.entity;
+package org.example.todolist.domain.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

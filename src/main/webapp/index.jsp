@@ -1,17 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" errorPage="error.jsp" %>
-<%@ page import="org.example.todolist.entity.TodoItem" %>
+<%@ page import="org.example.todolist.domain.entity.TodoItem" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Todo App</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/styles.css">
 </head>
 <body>
-<div class="header">
-    <h1> Todo App</h1>
-</div>
-
+<%@include file="header.jsp" %>
 <h2>List of Todos</h2>
 <a href="${pageContext.request.contextPath}/new.jsp">
     <button type="button">Add New Task</button>
@@ -45,20 +42,20 @@
             <form action="${pageContext.request.contextPath}/TodoList" method="post" style="display:inline;">
                 <input type="hidden" name="id" value="<%= item.getId() %>">
                 <input type="hidden" name="action" value="complete">
-                <label>
-                    <input type="checkbox"
-                           onchange="<%  %>this.form.submit();<%  %>" <%= item.isCompleted() ? "checked" : "" %>>
-                </label>
+                <button type="submit"><%= item.isCompleted() ? "Mark as Pending" : "Mark as Completed" %></button>
+            </form>
+            <form method="post" style="display:inline;" action="edit.jsp">
+                <%
+                  session.setAttribute("item", item);
+                %>
+                <input type="hidden" name="action" value="edit">
+                <button type="submit">Edit</button>
             </form>
             <form action="${pageContext.request.contextPath}/TodoList" method="post" style="display:inline;">
                 <input type="hidden" name="id" value="<%= item.getId() %>">
                 <input type="hidden" name="action" value="delete">
                 <button type="submit">Delete</button>
             </form>
-            <a href="${pageContext.request.contextPath}/edit.jsp?action=getTaskDetails&id=<%= item.getId() %>">
-                <button type="button">Edit</button>
-            </a>
-
         </td>
     </tr>
     <%
@@ -67,5 +64,6 @@
     %>
     </tbody>
 </table>
+<%@include file="footer.jsp" %>
 </body>
 </html>
